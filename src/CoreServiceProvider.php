@@ -1,9 +1,17 @@
 <?php namespace Atlas;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\ProviderRepository;
+
+use Atlas\Support\LoadsServiceProviders;
+use Atlas\Constants\ConstantsServiceProvider as Constants;
+use Atlas\Installer\InstallerServiceProvider as Installer;
 
 class CoreServiceProvider extends ServiceProvider
 {
+
+    use LoadsServiceProviders;
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -13,21 +21,28 @@ class CoreServiceProvider extends ServiceProvider
 	protected $defer = false;
 
     /**
+     * Additional Service Providers to be loaded before the Main Atlas Application boots
+     *
+     * @var array
+     */
+    protected $providers = [
+        Constants::class,
+    ];
+
+    /**
      * Bootstrap the application events.
      *
      * @return void
      */
     public function boot(CoreContract $core)
     {
+        $this->loadServiceProviders($this->providers);
+
         if (!$core->isInstalled()) {
-
-
-            return;
+            return $this->loadServiceProviders([Installer::class]);
         }
 
-//        $this->publishes([
-//            __DIR__.'/../config/assets.php' => config_path('assets.php'),
-//        ], 'config');
+        $core->boot();
     }
 
 	/**
@@ -51,7 +66,9 @@ class CoreServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return [CoreContract::class];
+		return [
+            CoreContract::class,
+        ];
 	}
 
 }

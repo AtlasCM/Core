@@ -8,6 +8,6 @@ interface CoreContract
      *
      * @return bool
      */
-    public function isInstalled(){}
+    public function isInstalled();
 
 }
