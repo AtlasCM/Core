@@ -7,14 +7,14 @@ use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
 
 class CoreServiceProvider extends ServiceProvider
 {
-
+    
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
 	 * @var bool
 	 */
 	protected $defer = false;
-
+    
     /**
      * Bootstrap the application events.
      *
@@ -24,7 +24,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         include __DIR__ . '/routes.php';
     }
-
+    
 	/**
 	 * Register the service provider.
 	 *
@@ -36,5 +36,5 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../config/atlas/installer.php', 'atlas.installer'
         );
 	}
-
+    
 }

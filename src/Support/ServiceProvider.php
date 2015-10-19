@@ -8,10 +8,10 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 abstract class ServiceProvider extends BaseServiceProvider
 {
-
+    
     protected function registerFacades($facades)
     {
         $this->app->make(CoreContract::class)->registerFacades($facades);
     }
-
+    
 }

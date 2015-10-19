@@ -2,7 +2,7 @@
 
 interface CoreContract
 {
-
+    
     /**
      * Check if Atlas is installed
      *

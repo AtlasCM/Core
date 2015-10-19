@@ -10,9 +10,9 @@ use Atlas\Support\LoadsServiceProviders;
 
 class Core implements CoreContract
 {
-
+    
     use Package, LoadsServiceProviders;
-
+    
     /**
      * Package Info
      *
@@ -21,23 +21,23 @@ class Core implements CoreContract
      */
     const PACKAGE = 'Atlas/Core';
     const VERSION = '0.0.0';
-
+    
     protected $facades = [
         'Constants' => 'Atlas\Constants\Facades\Constants',
     ];
-
+    
     public function __construct()
     {
         $this->registerFacades($this->facades);
     }
-
+    
     public function boot()
     {
         $providers = $this->getServiceProviders();
-
+        
         $this->loadServiceProviders($providers);
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -45,7 +45,7 @@ class Core implements CoreContract
     {
         return Schema::hasTable('AtlasMeta') ? ((bool) DB::table('AtlasMeta')->where('meta_name', 'is_installed')->where('meta_value', true)->count()) : false;
     }
-
+    
     /**
      * Register Atlas' Facades
      *
@@ -55,14 +55,14 @@ class Core implements CoreContract
     {
         AliasLoader::getInstance()->register($facades);
     }
-
+    
     protected function loadServiceProviders()
     {
         // Get all installed ServiceProviders
-
+        
         $manifestPath = $this->app->getCachedServicesPath();
         (new ProviderRepository($this, new Filesystem, $manifestPath))
                     ->load($providers);
     }
-
+    
 }

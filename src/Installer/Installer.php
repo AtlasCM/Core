@@ -4,7 +4,7 @@ use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
 
 class Installer implements InstallerContract
 {
-
+    
     /**
      * @inheritdoc
      */
@@ -12,10 +12,10 @@ class Installer implements InstallerContract
     {
         $this->registerRoutes();
     }
-
+    
     protected function registerRoutes()
     {
         include __DIR__ . '/routes.php';
     }
-
+    
 }

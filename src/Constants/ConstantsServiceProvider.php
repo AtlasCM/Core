@@ -4,14 +4,14 @@ use Atlas\Support\ServiceProvider;
 
 class ConstantsServiceProvider extends ServiceProvider
 {
-
+    
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *
 	 * @var bool
 	 */
 	protected $defer = false;
-
+    
 	/**
 	 * Register the service provider.
 	 *
@@ -23,5 +23,5 @@ class ConstantsServiceProvider extends ServiceProvider
             'Constants' => 'Atlas\Constants\Facades\Constants',
         ]);
 	}
-
+    
 }

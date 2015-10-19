@@ -2,12 +2,12 @@
 
 interface Installer
 {
-
+    
     /**
      * Start the Installer
      *
      * @return void
      */
     public function boot();
-
+    
 }
