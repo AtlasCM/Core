@@ -9,5 +9,5 @@ interface CoreContract
      * @return bool
      */
     public function isInstalled();
-
+    
 }

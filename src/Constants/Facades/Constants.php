@@ -1,4 +1,4 @@
-<?php namespace Atlas\Constants\Facades\Constants;
+<?php namespace Atlas\Constants\Facades;
 
 use Atlas\Constants\Accessor;
 

@@ -1,4 +1,4 @@
-<?php namespace Atlas\Core\Installer;
+<?php namespace Atlas\Constants;
 
 use Atlas\Support\ServiceProvider;
 

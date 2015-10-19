@@ -2,7 +2,7 @@
 
 use Atlas\Constants\Bag;
 
-interface BagAccess
+trait BagAccess
 {
     
     protected function _getBag($name)

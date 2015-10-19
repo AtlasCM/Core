@@ -1,8 +1,7 @@
 <?php namespace Atlas\Core\Installer;
 
-use Illuminate\Support\ServiceProvider;
+use Atlas\Support\ServiceProvider;
 
-use Atlas\Core\Installer\Installer;
 use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
 
 class CoreServiceProvider extends ServiceProvider
@@ -35,6 +34,12 @@ class CoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/atlas/installer.php', 'atlas.installer'
         );
+        
+        $this->app->singleton(InstallerContract::class, Installer::class);
+        
+        $this->registerFacades([
+            'Installer' => 'Atlas\Installer\Facades\Installer',
+        ]);
 	}
     
 }

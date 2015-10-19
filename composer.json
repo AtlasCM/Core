@@ -4,6 +4,16 @@
     "require": {
         "cupoftea/package": "^1.2"
     },
+    "autoload": {
+        "psr-4": {
+            "Atlas\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    },
     "license": "MIT",
     "authors": [
         {

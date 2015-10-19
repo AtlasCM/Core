@@ -2,9 +2,10 @@
 
 use DB;
 use Schema;
-use AliasLoader;
 
 use CupOfTea\Package\Package;
+
+use Illuminate\Foundation\AliasLoader;
 
 use Atlas\Support\LoadsServiceProviders;
 
@@ -23,12 +24,14 @@ class Core implements CoreContract
     const VERSION = '0.0.0';
     
     protected $facades = [
-        'Constants' => 'Atlas\Constants\Facades\Constants',
+        'Atlas\Core' => [
+            'Constants' => 'Atlas\Constants\Facades\Constants',
+        ],
     ];
     
     public function __construct()
     {
-        $this->registerFacades($this->facades);
+        //$this->register();
     }
     
     public function boot()
@@ -39,11 +42,21 @@ class Core implements CoreContract
     }
     
     /**
+     * Get the Cached services path
+     * 
+     * @return string Cached services path
+     */
+    public function getCachedServicesPath()
+    {
+        return app()->basePath() . '/bootstrap/cache/atlas_services.json';
+    }
+    
+    /**
      * @inheritdoc
      */
     public function isInstalled()
     {
-        return Schema::hasTable('AtlasMeta') ? ((bool) DB::table('AtlasMeta')->where('meta_name', 'is_installed')->where('meta_value', true)->count()) : false;
+        return env('ATLAS_INSTALLED', false) && (Schema::hasTable(Constants) ? ((bool) DB::table('AtlasMeta')->where('meta_name', 'is_installed')->where('meta_value', true)->count()) : false);
     }
     
     /**
@@ -51,18 +64,25 @@ class Core implements CoreContract
      *
      * @return void
      */
-    protected function registerFacades($facades)
+    public function registerFacades($provider, $facades)
     {
-        AliasLoader::getInstance()->register($facades);
+        $this->facades[$provider] = $facades;
     }
     
-    protected function loadServiceProviders()
+    public function register()
+    {
+        $facades = collect($this->facades);
+        while ($facade = $facades->shift() && $facades->count()) {
+            
+        }
+        
+        AliasLoader::getInstance($facades)->register();
+        $this->facades = [];
+    }
+    
+    protected function getServiceProviders()
     {
         // Get all installed ServiceProviders
-        
-        $manifestPath = $this->app->getCachedServicesPath();
-        (new ProviderRepository($this, new Filesystem, $manifestPath))
-                    ->load($providers);
     }
     
 }
