@@ -2,7 +2,8 @@
 
 use Atlas\Routing\Controller;
 
-class InstallerController extends Controller {
+class InstallerController extends Controller
+{
 
     /**
      * Atlas Welcome page
