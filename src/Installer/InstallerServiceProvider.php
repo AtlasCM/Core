@@ -1,10 +1,10 @@
-<?php namespace Atlas\Core\Installer;
+<?php namespace Atlas\Installer;
 
 use Atlas\Support\ServiceProvider;
 
 use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
 
-class CoreServiceProvider extends ServiceProvider
+class InstallerServiceProvider extends ServiceProvider
 {
     
 	/**
@@ -32,7 +32,7 @@ class CoreServiceProvider extends ServiceProvider
 	public function register()
 	{
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/atlas/installer.php', 'atlas.installer'
+            __DIR__ . '/../../config/atlas/installer.php', 'atlas.installer'
         );
         
         $this->app->singleton(InstallerContract::class, Installer::class);
