@@ -8,6 +8,7 @@ use CupOfTea\Package\Package;
 use Illuminate\Foundation\AliasLoader;
 
 use Atlas\Support\LoadsServiceProviders;
+use Atlas\Exceptions\ServiceProviderConflictException;
 
 class Core implements CoreContract
 {
@@ -23,16 +24,7 @@ class Core implements CoreContract
     const PACKAGE = 'Atlas/Core';
     const VERSION = '0.0.0';
     
-    protected $facades = [
-        'Atlas\Core' => [
-            'Constants' => 'Atlas\Constants\Facades\Constants',
-        ],
-    ];
-    
-    public function __construct()
-    {
-        //$this->register();
-    }
+    protected $facades = [];
     
     public function boot()
     {
@@ -43,12 +35,12 @@ class Core implements CoreContract
     
     /**
      * Get the Cached services path
-     * 
+     *
      * @return string Cached services path
      */
-    public function getCachedServicesPath()
+    public function getCachedServicesPath($tag)
     {
-        return app()->basePath() . '/bootstrap/cache/atlas_services.json';
+        return app()->basePath() . '/bootstrap/cache/atlas_'. $tag . '_services.json';
     }
     
     /**
@@ -71,12 +63,21 @@ class Core implements CoreContract
     
     public function register()
     {
-        $facades = collect($this->facades);
-        while ($facade = $facades->shift() && $facades->count()) {
-            
+        $all_facades = $facades = collect($this->facades);
+        $all_facades = $all_facades->values()->collapse()->all();
+        $provider = [];
+        
+        while (($provider['name'] = $facades->keys()->shift()) && ($provider['facades'] = $facades->shift()) && $facades->count()) {
+            $facades->each(function($provider_facades, $provider_name) use ($provider) {
+                foreach ($provider['facades'] as $facade => $concrete) {
+                    if (collect($provider_facades)->has($facade)) {
+                        throw new ServiceProviderConflictException($provider['name'], $provider_name, $facade);
+                    }
+                }
+            });
         }
         
-        AliasLoader::getInstance($facades)->register();
+        AliasLoader::getInstance($all_facades)->register();
         $this->facades = [];
     }
     

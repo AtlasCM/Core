@@ -36,10 +36,10 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(CoreContract $core)
     {
-        $this->loadServiceProviders($this->providers);
+        $this->loadServiceProviders('core', $this->providers);
         
         if (!$core->isInstalled()) {
-            return $this->loadServiceProviders([Installer::class]);
+            return $this->loadServiceProviders('install', [Installer::class]);
         }
         
         $core->boot();

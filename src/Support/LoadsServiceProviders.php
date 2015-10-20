@@ -3,23 +3,23 @@
 use Event;
 
 use Atlas\CoreContract;
+use Atlas\Foundation\ProviderRepository;
 
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\ProviderRepository;
 
 trait LoadsServiceProviders
 {
     
-    protected function loadServiceProviders($providers)
+    protected function loadServiceProviders($tag, $providers)
     {
-        return;
+        $core = app(CoreContract::class);
         $providers = is_string($providers) ? [$providers] : $providers;
         
-        Event::listen(last($providers), function($event) {
-            app(CoreContract::class)->register();
+        Event::listen(last($providers), function($event) use ($core) {
+            $core->register();
         });
         
-        $manifestPath = app(CoreContract::class)->getCachedServicesPath();
+        $manifestPath = $core->getCachedServicesPath($tag);
         (new ProviderRepository($this->app, new Filesystem, $manifestPath))
                     ->load($providers);
     }
