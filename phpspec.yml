@@ -1,0 +1,15 @@
+
+suites:
+    atlas_suite: 
+        namespace: Atlas
+        psr4_prefix: Atlas
+
+formatter.name: nyan.dino
+
+extensions:
+    - PhpSpec\Laravel\Extension\LaravelExtension
+    - PhpSpec\NyanFormattersExtension\Extension
+
+laravel_extension:
+    testing_environment: "testing"
+    framework_path: "../../Atlas/bootstrap/app.php"

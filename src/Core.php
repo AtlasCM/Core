@@ -84,6 +84,8 @@ class Core implements CoreContract
     protected function getServiceProviders()
     {
         // Get all installed ServiceProviders
+        
+        return [];
     }
     
 }
