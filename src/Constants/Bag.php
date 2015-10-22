@@ -25,7 +25,7 @@ class Bag
     {
         $contents = include $file;
         
-        foreach ($contents as &$key => $value) {
+        foreach ($contents as $key => $value) {
             if (!preg_match('/^[A-Z][A-Z0-9_-]+$/', $key)) {
 				unset($contents[$key]);
                 $contents[strtoupper(ltrim($key, '0123456789-_'))] = $value;
