@@ -20,7 +20,7 @@ trait LoadsServiceProviders
         });
         
         $manifestPath = $core->getCachedServicesPath($tag);
-        (new ProviderRepository($this->app, new Filesystem, $manifestPath))
+        (new ProviderRepository(app(), new Filesystem, $manifestPath))
                     ->load($providers);
     }
     
