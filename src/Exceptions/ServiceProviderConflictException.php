@@ -9,7 +9,7 @@ class ServiceProviderConflictException extends Exception
     {
         $msg = $provider1 . ' and ' . $provider2 . ' are both trying to use a Facade named <strong>' . $facade . '</strong>';
         
-        return parent::__construct($msg, $code, $previous)
+        return parent::__construct($msg, $code, $previous);
     }
     
 }

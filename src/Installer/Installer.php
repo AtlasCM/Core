@@ -34,7 +34,7 @@ class Installer implements InstallerContract
      */
     public function getAppKey()
     {
-        DB::table('AtlasMeta')->where('meta_name', 'is_installed')
+        DB::table('AtlasMeta')->where('meta_name', 'is_installed');
     }
     
     /**

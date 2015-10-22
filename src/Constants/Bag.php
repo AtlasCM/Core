@@ -21,7 +21,7 @@ class Bag
         }
     }
     
-    protected function getContentsFromFile($file;)
+    protected function getContentsFromFile($file)
     {
         $contents = include $file;
         

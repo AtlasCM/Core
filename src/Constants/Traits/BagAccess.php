@@ -30,7 +30,7 @@ trait BagAccess
         array_set($this->bags, $name, $bag);
     }
     
-    public function __call($name)
+    public function __call($name, $a)
     {
         return $this->getBag($name);
     }
