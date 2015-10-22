@@ -2,12 +2,10 @@
 
 interface CoreContract
 {
-    
     /**
-     * Check if Atlas is installed
+     * Check if Atlas is installed.
      *
      * @return bool
      */
     public function isInstalled();
-    
 }

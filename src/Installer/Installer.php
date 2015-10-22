@@ -4,9 +4,8 @@ use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
 
 class Installer implements InstallerContract
 {
-    
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function environmentIsConfigured()
     {
@@ -14,15 +13,14 @@ class Installer implements InstallerContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setEnv($variables)
     {
-        
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function dbIsInstalled()
     {
@@ -30,7 +28,7 @@ class Installer implements InstallerContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getAppKey()
     {
@@ -38,19 +36,16 @@ class Installer implements InstallerContract
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function migrateDb()
     {
-        
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setSuperAdmin($details)
     {
-        
     }
-    
 }

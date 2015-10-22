@@ -1,12 +1,10 @@
 <?php namespace Illuminate\Foundation\Bootstrap;
 
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Contracts\Foundation\Application;
 
 class RegisterFacades
 {
-    
     /**
      * Bootstrap the given application.
      *
@@ -17,5 +15,4 @@ class RegisterFacades
     {
         AliasLoader::getInstance($app->make(CoreContract::class)->getFacades())->register();
     }
-    
 }

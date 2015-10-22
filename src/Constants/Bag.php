@@ -4,7 +4,6 @@ use Atlas\Constants\Traits\BagAccess;
 
 class Bag
 {
-    
     use BagAccess;
     
     protected $file;
@@ -26,8 +25,8 @@ class Bag
         $contents = include $file;
         
         foreach ($contents as $key => $value) {
-            if (!preg_match('/^[A-Z][A-Z0-9_-]+$/', $key)) {
-				unset($contents[$key]);
+            if (! preg_match('/^[A-Z][A-Z0-9_-]+$/', $key)) {
+                unset($contents[$key]);
                 $contents[strtoupper(ltrim($key, '0123456789-_'))] = $value;
             }
         }
@@ -61,5 +60,4 @@ class Bag
     {
         return $this->getValue($key);
     }
-    
 }
