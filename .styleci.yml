@@ -5,7 +5,6 @@ preset: psr1
 #  - "no_blank_lines_before_namespace"
 
 enabled:
-  - "concat_with_spaces"
   - "no_blank_lines_before_namespace"
   - "alias_functions"
   - "braces"
