@@ -20,4 +20,4 @@ trait LoadsServiceProviders
         (new ProviderRepository(app(), new Filesystem, $manifestPath))
                     ->load($providers);
     }
-}
+} 
