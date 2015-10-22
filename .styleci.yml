@@ -5,7 +5,6 @@ preset: psr1
 #  - "no_blank_lines_before_namespace"
 
 enabled:
-  - "braces"
   - "double_arrow_multiline_whitespaces"
   - "duplicate_semicolon"
   - "elseif"
