@@ -18,7 +18,6 @@ enabled:
   - "function_declaration"
   - "function_typehint_space"
   - "include"
-  - "indentation"
   - "linefeed"
   - "line_after_namespace"
   - "list_commas"
