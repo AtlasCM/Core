@@ -4,8 +4,8 @@ enabled:
   - "concat_with_spaces"
 
 disabled:
+  - "blankline_after_open_tag"
   - "concat_without_spaces"
-  - "newline_after_open_tag"
   - "no_blank_lines_after_class_opening"
   - "remove_lines_between_uses"
   - "whitespacy_lines"
