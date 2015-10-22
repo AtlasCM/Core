@@ -1,5 +1,9 @@
 preset: psr1
 
+#enabled:
+#  - "concat_with_spaces"
+#  - "no_blank_lines_before_namespace"
+
 enabled:
   - "concat_with_spaces"
   - "no_blank_lines_before_namespace"
@@ -10,7 +14,6 @@ enabled:
   - "elseif"
   - "empty_return"
   - "eof_ending"
-  - "extra_empty_lines"
   - "function_call_space"
   - "function_declaration"
   - "function_typehint_space"
