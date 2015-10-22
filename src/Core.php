@@ -30,7 +30,8 @@ class Core implements CoreContract
     {
         $providers = $this->getServiceProviders();
         
-        $this->loadServiceProviders($providers);
+        $this->loadServiceProviders('plugins', $providers['plugins']);
+        $this->loadServiceProviders('themes', $providers['themes']);
     }
     
     /**
@@ -85,7 +86,10 @@ class Core implements CoreContract
     {
         // Get all installed ServiceProviders
         
-        return [];
+        return [
+            'plugins' => [],
+            'themes' => [],
+        ];
     }
     
 }
