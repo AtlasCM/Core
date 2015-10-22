@@ -1,0 +1,10 @@
+preset: laravel
+
+disabled:
+  - "whitespacy_lines"
+
+finder:
+  exclude:
+    - ".phpspec"
+    - "spec"
+    - "tests"
