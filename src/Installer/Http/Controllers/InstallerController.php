@@ -4,9 +4,8 @@ use Atlas\Routing\Controller;
 
 class InstallerController extends Controller
 {
-    
     /**
-     * Atlas Welcome page
+     * Atlas Welcome page.
      *
      * @return Response
      */
@@ -14,5 +13,4 @@ class InstallerController extends Controller
     {
         return view('atlas.installer::welcome');
     }
-    
 }

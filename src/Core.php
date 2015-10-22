@@ -2,21 +2,17 @@
 
 use DB;
 use Schema;
-
 use CupOfTea\Package\Package;
-
 use Illuminate\Foundation\AliasLoader;
-
 use Atlas\Support\LoadsServiceProviders;
 use Atlas\Exceptions\ServiceProviderConflictException;
 
 class Core implements CoreContract
 {
-    
     use Package, LoadsServiceProviders;
     
     /**
-     * Package Info
+     * Package Info.
      *
      * @const string PACKAGE
      * @const string VERSION
@@ -35,17 +31,17 @@ class Core implements CoreContract
     }
     
     /**
-     * Get the Cached services path
+     * Get the Cached services path.
      *
      * @return string Cached services path
      */
     public function getCachedServicesPath($tag)
     {
-        return app()->basePath() . '/bootstrap/cache/atlas_'. $tag . '_services.json';
+        return app()->basePath() . '/bootstrap/cache/atlas_' . $tag . '_services.json';
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isInstalled()
     {
@@ -53,7 +49,7 @@ class Core implements CoreContract
     }
     
     /**
-     * Register Atlas' Facades
+     * Register Atlas' Facades.
      *
      * @return void
      */
@@ -69,7 +65,7 @@ class Core implements CoreContract
         $provider = [];
         
         while (($provider['name'] = $facades->keys()->shift()) && ($provider['facades'] = $facades->shift()) && $facades->count()) {
-            $facades->each(function($provider_facades, $provider_name) use ($provider) {
+            $facades->each(function ($provider_facades, $provider_name) use ($provider) {
                 foreach ($provider['facades'] as $facade => $concrete) {
                     if (collect($provider_facades)->has($facade)) {
                         throw new ServiceProviderConflictException($provider['name'], $provider_name, $facade);
@@ -91,5 +87,4 @@ class Core implements CoreContract
             'themes' => [],
         ];
     }
-    
 }

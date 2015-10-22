@@ -4,10 +4,9 @@ use Atlas\Constants\Bag;
 
 trait BagAccess
 {
-    
     protected function _getBag($name)
     {
-        return array_get($this->bags, $name, $this->bags, function() use($name) {
+        return array_get($this->bags, $name, $this->bags, function () use ($name) {
             return array_get(array_set($this->bags, $name, new Bag()), $name);
         });
     }
@@ -34,5 +33,4 @@ trait BagAccess
     {
         return $this->getBag($name);
     }
-    
 }

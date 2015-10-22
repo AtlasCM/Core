@@ -1,21 +1,18 @@
 <?php namespace Atlas\Support;
 
 use Event;
-
 use Atlas\CoreContract;
 use Atlas\Foundation\ProviderRepository;
-
 use Illuminate\Filesystem\Filesystem;
 
 trait LoadsServiceProviders
 {
-    
     protected function loadServiceProviders($tag, $providers)
     {
         $core = app(CoreContract::class);
         $providers = is_string($providers) ? [$providers] : $providers;
         
-        Event::listen(last($providers), function($event) use ($core) {
+        Event::listen(last($providers), function ($event) use ($core) {
             $core->register();
         });
         
@@ -23,5 +20,4 @@ trait LoadsServiceProviders
         (new ProviderRepository(app(), new Filesystem, $manifestPath))
                     ->load($providers);
     }
-    
 }

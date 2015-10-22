@@ -4,7 +4,6 @@ use Illuminate\Foundation\ProviderRepository as BaseProviderRepository;
 
 class ProviderRepository extends BaseProviderRepository
 {
-    
     public function load(array $providers)
     {
         $manifest = $this->loadManifest();
@@ -47,5 +46,4 @@ class ProviderRepository extends BaseProviderRepository
         
         return array_merge(['when' => []], $manifest);
     }
-    
 }
