@@ -17,7 +17,7 @@ class CoreSpec extends LaravelObjectBehavior
     
     function it_implements_the_core_contract()
     {
-        $this->shouldHaveType('Atlas\CoreContract');
+        $this->shouldImplement('Atlas\CoreContract');
     }
     
     function it_should_have_a_cahed_services_path()
