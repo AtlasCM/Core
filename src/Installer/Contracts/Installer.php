@@ -1,4 +1,4 @@
-<?php namespace Atlas\Core\Installer\Contracts;
+<?php namespace Atlas\Installer\Contracts;
 
 interface Installer
 {

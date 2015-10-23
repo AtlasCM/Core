@@ -1,6 +1,6 @@
-<?php namespace Atlas\Core\Installer;
+<?php namespace Atlas\Installer;
 
-use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
+use Atlas\Installer\Contracts\Installer as InstallerContract;
 
 class Installer implements InstallerContract
 {

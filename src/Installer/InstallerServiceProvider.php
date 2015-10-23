@@ -1,7 +1,7 @@
 <?php namespace Atlas\Installer;
 
 use Atlas\Support\ServiceProvider;
-use Atlas\Core\Installer\Contracts\Installer as InstallerContract;
+use Atlas\Installer\Contracts\Installer as InstallerContract;
 
 class InstallerServiceProvider extends ServiceProvider
 {
