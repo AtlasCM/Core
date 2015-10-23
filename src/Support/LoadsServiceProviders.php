@@ -1,10 +1,8 @@
 <?php namespace Atlas\Support;
 
 use Event;
-
 use Atlas\CoreContract;
 use Atlas\Foundation\ProviderRepository;
-
 use Illuminate\Filesystem\Filesystem;
 
 trait LoadsServiceProviders
@@ -20,6 +18,6 @@ trait LoadsServiceProviders
         
         $manifestPath = $core->getCachedServicesPath($tag);
         with(new ProviderRepository(app(), new Filesystem, $manifestPath))
-            -> load($providers);
+            ->load($providers);
     }
 }
