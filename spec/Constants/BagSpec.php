@@ -7,6 +7,11 @@ use Prophecy\Argument;
 
 class BagSpec extends LaravelObjectBehavior
 {
+    function let()
+    {
+        $this->beConstructedWith('name');
+    }
+    
     function it_is_initializable()
     {
         $this->shouldHaveType('Atlas\Constants\Bag');
