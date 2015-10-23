@@ -14,7 +14,8 @@
     "autoload": {
         "psr-4": {
             "Atlas\\": "src/",
-            "App\\": "../Atlas/app/"
+            "App\\": "../Atlas/app/",
+            "spec\\Atlas\\": "spec"
         }
     },
     "extra": {

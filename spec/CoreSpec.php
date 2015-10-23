@@ -2,14 +2,11 @@
 
 namespace spec\Atlas;
 
-use Faker\Factory as Faker;
-
-use PhpSpec\Laravel\LaravelObjectBehavior;
+use spec\Atlas\ObjectBehavior;
 use Prophecy\Argument;
 
-class CoreSpec extends LaravelObjectBehavior
+class CoreSpec extends ObjectBehavior
 {
-    
     function it_is_initializable()
     {
         $this->shouldHaveType('Atlas\Core');
@@ -22,7 +19,7 @@ class CoreSpec extends LaravelObjectBehavior
     
     function it_should_have_a_cahed_services_path()
     {
-        $tag = 'tag';
+        $tag = $this->faker->word;
         
         $this->getCachedServicesPath($tag)->shouldBe(app()->basePath() . '/bootstrap/cache/atlas_'. $tag . '_services.json');
     }

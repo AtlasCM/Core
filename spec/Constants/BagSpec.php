@@ -2,14 +2,14 @@
 
 namespace spec\Atlas\Constants;
 
-use PhpSpec\Laravel\LaravelObjectBehavior;
+use spec\Atlas\ObjectBehavior;
 use Prophecy\Argument;
 
-class BagSpec extends LaravelObjectBehavior
+class BagSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('name');
+        $this->beConstructedWith($this->faker->word);
     }
     
     function it_is_initializable()

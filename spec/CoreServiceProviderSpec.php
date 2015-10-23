@@ -5,10 +5,10 @@ namespace spec\Atlas;
 use Illuminate\Foundation\Application;
 use Illuminate\Config\Repository;
 
-use PhpSpec\Laravel\LaravelObjectBehavior;
+use spec\Atlas\ObjectBehavior;
 use Prophecy\Argument;
 
-class CoreServiceProviderSpec extends LaravelObjectBehavior
+class CoreServiceProviderSpec extends ObjectBehavior
 {
     function let(Application $app, Repository $cfg)
     {

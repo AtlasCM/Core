@@ -2,10 +2,10 @@
 
 namespace %namespace%;
 
-use PhpSpec\Laravel\LaravelObjectBehavior;
+use spec\Atlas\ObjectBehavior;
 use Prophecy\Argument;
 
-class %name% extends LaravelObjectBehavior
+class %name% extends ObjectBehavior
 {
     function it_is_initializable()
     {
