@@ -1,10 +1,13 @@
 <?php namespace Atlas\Constants;
 
 use Atlas\Constants\Traits\BagAccess;
+use Atlas\Constants\Contracts\Bag as BagContract;
 
-class Bag
+class Bag implements BagContract
 {
     use BagAccess;
+    
+    protected $name;
     
     protected $file;
     
@@ -12,9 +15,11 @@ class Bag
     
     protected $contents = [];
     
-    public function __construct($file = null)
+    public function __construct($name, $file = null)
     {
-        if ($bag_file) {
+        $this->name = $name;
+        
+        if ($file) {
             $this->file = $file;
             $this->load();
         }
@@ -30,11 +35,13 @@ class Bag
                 $contents[strtoupper(ltrim($key, '0123456789-_'))] = $value;
             }
         }
+        
+        return $contents;
     }
     
     public function load($file = null)
     {
-        $file = $file ?: $this->file;
+        $file = Accessor::BAG_PATH . '/' . ($file ?: $this->file);
         
         if (file_exists($file)) {
             $this->contents = array_merge($this->contents, $this->getContentsFromFile($file));

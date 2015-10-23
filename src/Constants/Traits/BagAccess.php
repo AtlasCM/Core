@@ -6,8 +6,8 @@ trait BagAccess
 {
     protected function _getBag($name)
     {
-        return array_get($this->bags, $name, $this->bags, function () use ($name) {
-            return array_get(array_set($this->bags, $name, new Bag()), $name);
+        return array_get($this->bags, $name, function () use ($name) {
+            return array_get(array_set($this->bags, $name, new Bag($name)), $name);
         });
     }
     
@@ -27,6 +27,13 @@ trait BagAccess
     public function setBag($name, Bag $bag)
     {
         array_set($this->bags, $name, $bag);
+    }
+    
+    public function addBag($name, Bag $bag)
+    {
+        if (! array_get($this->bags, $name)) {
+            array_set($this->bags, $name, $bag);
+        }
     }
     
     public function __call($name, $a)
