@@ -5,7 +5,6 @@ use Schema;
 use Constants;
 use CupOfTea\Package\Package;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Database\DatabaseManager;
 use Atlas\Support\LoadsServiceProviders;
 use Atlas\Exceptions\ServiceProviderConflictException;
 
@@ -45,7 +44,6 @@ class Core implements CoreContract
      */
     public function isInstalled()
     {
-        
         $meta_table = Constants::db()->META_TABLE;
         $meta_key = Constants::db()->META_KEY;
         $meta_value = Constants::db()->META_VALUE;
