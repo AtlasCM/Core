@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace Atlas\Core\Installer\Http\Controllers;
 
 use Atlas\Routing\Controller;
 
