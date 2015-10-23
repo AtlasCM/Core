@@ -2,8 +2,10 @@
 
 use DB;
 use Schema;
+use Constants;
 use CupOfTea\Package\Package;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Database\DatabaseManager;
 use Atlas\Support\LoadsServiceProviders;
 use Atlas\Exceptions\ServiceProviderConflictException;
 
@@ -31,9 +33,7 @@ class Core implements CoreContract
     }
     
     /**
-     * Get the Cached services path.
-     *
-     * @return string Cached services path
+     * {@inheritdoc}
      */
     public function getCachedServicesPath($tag)
     {
@@ -45,13 +45,16 @@ class Core implements CoreContract
      */
     public function isInstalled()
     {
-        return env('ATLAS_INSTALLED', false) && (Schema::hasTable(Constants) ? ((bool) DB::table('AtlasMeta')->where('meta_name', 'is_installed')->where('meta_value', true)->count()) : false);
+        
+        $meta_table = Constants::db()->META_TABLE;
+        $meta_key = Constants::db()->META_KEY;
+        $meta_value = Constants::db()->META_VALUE;
+        
+        return env('ATLAS_INSTALLED', false) && (Schema::hasTable($meta_table) ? ((bool) DB::table($meta_table)->where($meta_key, 'is_installed')->where($meta_value, true)->count()) : false);
     }
     
     /**
-     * Register Atlas' Facades.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function registerFacades($provider, $facades)
     {
