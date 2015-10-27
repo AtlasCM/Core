@@ -3,6 +3,7 @@
 use DB;
 use Schema;
 use Constants;
+use Exception;
 use CupOfTea\Package\Package;
 use Illuminate\Foundation\AliasLoader;
 use Atlas\Support\LoadsServiceProviders;
@@ -48,7 +49,13 @@ class Core implements CoreContract
         $meta_key = Constants::db()->META_KEY;
         $meta_value = Constants::db()->META_VALUE;
         
-        return env('ATLAS_INSTALLED', false) && (Schema::hasTable($meta_table) ? ((bool) DB::table($meta_table)->where($meta_key, 'is_installed')->where($meta_value, true)->count()) : false);
+        try {
+            $table_exists = Schema::hasTable($meta_table);
+        } catch (Exception $e) {
+            $table_exists = false;
+        }
+        
+        return env('ATLAS_INSTALLED', false) && ($table_exists ? ((bool) DB::table($meta_table)->where($meta_key, 'is_installed')->where($meta_value, true)->count()) : false);
     }
     
     /**

@@ -34,6 +34,8 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->loadServiceProviders('core', $this->providers);
         
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/core', 'atlas.core');
+        
         if (! $core->isInstalled()) {
             return $this->loadServiceProviders('install', [Installer::class]);
         }

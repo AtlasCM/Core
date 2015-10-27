@@ -36,9 +36,5 @@ class InstallerServiceProvider extends ServiceProvider
         );
         
         $this->app->singleton(InstallerContract::class, Installer::class);
-        
-        $this->registerFacades([
-            'Installer' => 'Atlas\Installer\Facades\Installer',
-        ]);
     }
 }

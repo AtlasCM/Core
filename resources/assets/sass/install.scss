@@ -1,0 +1,47 @@
+// required
+@import "install/fonts", "install/icons/font-awesome";
+@import "bourbon";
+
+// disable for production / enable for development
+$debug: false;
+
+// Neat + Settings
+$visual-grid: $debug;
+$visual-grid-color: yellow;
+$visual-grid-index: front;
+$visual-grid-opacity: .3;
+$max-width: em(1178) !global;
+$gutter: modular-scale(1, 4.5em, $golden);
+@import "neat";
+
+// vars
+$app: "atlas";
+
+$mainFont: "Lato", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "HelveticaNeue", $helvetica;
+$headingFont: "Lato", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "HelveticaNeue", $helvetica;
+$fontBaseSize: 18px;
+$fontBaseHeight: 1.65;
+
+$container-lg: 1178px;
+
+$mainColor: mix(#93EDC7, #1CD8D2);
+$textColor: #FFF;
+$darkTextColor: #222;
+$accentColor: #00918C;
+
+@import "core/variables";
+
+// settings
+$csstyle-part-symbol: '\\/';
+$csstyle-root-id: $app;
+
+$footerHeight: 64px;
+
+// core
+@import "core/core";
+
+// app
+@import "install/base";
+@import "install/tweaks";
+@import "install/layouts";
+@import "install/components";

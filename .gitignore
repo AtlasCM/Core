@@ -1,2 +1,4 @@
 composer.lock
+config.codekit
+.sass-cache
 /vendor/

@@ -1,0 +1,46 @@
+@include component(icn) {
+    display: inline-block;
+    background-size: contain;
+    
+    @include option(logo_full) {
+        @include size(18px * 704/256, 18px);
+        
+        @include option(black) {
+            background-image: url('../img/logo_full_black.png');
+            
+            @include hidpi {
+                background-image: url('../img/logo_full_black@2x.png');
+            }
+        }
+        
+        @include option(white) {
+            background-image: url('../img/logo_full_white.png');
+            
+            @include hidpi {
+                background-image: url('../img/logo_full_white@2x.png');
+            }
+        }
+        
+        @include option(title) {
+            @include size(192px * 704/256, 192px);
+        }
+    }
+    
+    @include option(logo_small) {
+        @include option(black) {
+            background-image: url('../img/logo_small_black.png');
+            
+            @include hidpi {
+                background-image: url('../img/logo_small_black@2x.png');
+            }
+        }
+        
+        @include option(white) {
+            background-image: url('../img/logo_small_white.png');
+            
+            @include hidpi {
+                background-image: url('../img/logo_small_white@2x.png');
+            }
+        }
+    }
+}
