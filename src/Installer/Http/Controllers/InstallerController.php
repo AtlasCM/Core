@@ -19,8 +19,20 @@ class InstallerController extends Controller
         $db_configured = $installer->dbIsConfigured();
         $db_installed = $installer->dbIsInstalled();
         
-        return view('atlas.installer::welcome', compact('env_configured', 'db_configured', 'db_installed'));
+        $route = $env_configured ? 'db.create' : 'env.create';
+        
+        return view('atlas.installer::welcome', compact('route'));
     }
     
+    public function createEnv(Installer $installer)
+    {
+        $installer->setEnv([]);
+        return;
+        return view('atlas.installer::environment');
+    }
     
+    public function storeEnv()
+    {
+        // redirect to next step
+    }
 }

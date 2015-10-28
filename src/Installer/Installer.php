@@ -2,6 +2,7 @@
 
 use DB;
 use Schema;
+use Storage;
 use Constants;
 use Exception;
 
@@ -24,6 +25,11 @@ class Installer implements InstallerContract
      */
     protected $meta_value;
     
+    /**
+     * @protected \League\Flysystem\Filesystem
+     */
+    protected $disk;
+    
     public function __construct()
     {
         $this->meta_table = Constants::db()->META_TABLE;
@@ -44,6 +50,45 @@ class Installer implements InstallerContract
      */
     public function setEnv($variables)
     {
+        $disk = $this->getDisk();
+        $variables = ['ATLAS_INSTALLED' => true];
+        
+        if (! $disk->exists('.env')) {
+            $disk->copy('atlas.env', '.env');
+        }
+        
+        $dotenv = $disk->get('.env');
+        
+        $env = collect(explode(PHP_EOL, $dotenv))->map(function ($kv, $line) {
+            if (str_contains($kv, '=')) {
+                $kv = explode('=', $kv);
+                list($key, $value) = $kv;
+                
+                return compact('key', 'value', 'line');
+            }
+            
+            return ['key' => $line, 'value' => null, 'line' => $line];
+        })->keyBy('key');
+        
+        $variables = collect($variables)->map(function ($value, $key) {
+            $line = $key == 'ATLAS_INSTALLED' ? -INF : INF;
+            
+            return compact('key', 'value', 'line');
+        });
+        if ($variables->has('ATLAS_INSTALLED')) {
+            $variables->put(0, ['key' => 0, 'value' => null, 'line' => -INF + 1]);
+        }
+        
+        $env = $env->merge($variables)->sortBy('line')->reduce(function ($env_str, $kv) {
+            extract($kv);
+            
+            return $env_str . (is_string($key) ? $key . '=' . (is_string($value) ? $value : var_export($value, true)) : '') . PHP_EOL;
+        });
+        $env = trim(preg_replace('/\n\n\n*/', PHP_EOL . PHP_EOL, $env));
+        
+        if ($env !== $dotenv) {
+            $disk->put('.env', $env);
+        }
     }
     
     public function dbIsConfigured()
@@ -91,5 +136,17 @@ class Installer implements InstallerContract
      */
     public function setSuperAdmin($details)
     {
+    }
+    
+    protected function getDisk()
+    {
+        if ($this->disk) {
+            return $this->disk;
+        }
+        
+        return $this->disk = Storage::createLocalDriver([
+            'driver' => 'local',
+            'root'   => base_path(),
+        ]);
     }
 }
