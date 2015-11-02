@@ -1,0 +1,142 @@
+@include component(select) {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 32px;
+    background: $textColor;
+    color: $darkTextColor;
+    text-align: left;
+    box-shadow: 0 1px 2px rgba(#000, .1);
+    
+    @include part(toggle) {
+        &:checked {
+            ~ {
+                @include component(select) {
+                    @include part(open) {
+                        &:after {
+                            transform: rotate(-180deg);
+                        }
+                    }
+                    
+                    @include part(close) {
+                        pointer-events: auto;
+                    }
+                    
+                    @include part(options) {
+                        background: $textColor;
+                        pointer-events: auto;
+                        
+                        &:after {
+                            box-shadow: 0 2px 5px 0 rgba(#000, .16), 0 2px 10px 0 rgba(#000, .12);
+                        }
+                        
+                        @include component(select) {
+                            @include part(option) {
+                                color: $darkTextColor;
+                                
+                                &:hover {
+                                    color: $accentColor;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @include part(selection) {
+        &:checked {
+            ~ {
+                @include component(select) {
+                    @include part(open) {
+                        color: #FFF;
+                    }
+                }
+            }
+            
+            @for $i from 1 through 10 {
+                &:nth-child(#{$i}) {
+                    ~ {
+                        @include component(select) {
+                            @include part(options) {
+                                @include component(select) {
+                                    @include part(option) {
+                                        &:nth-child(#{$i}) {
+                                            &:before {
+                                                opacity: 1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @include part(open, option) {
+        display: block;
+        padding: 1em;
+    }
+    
+    @include part(open) {
+        padding-right: 5em;
+        
+        &:after {
+            content: $fa-var-angle-down;
+            @include absolute((top: 1.2em, right: 1em));
+            width: 1em;
+            text-align: center;
+            font-family: FontAwesome;
+            color: $darkTextColor;
+            transition: transform .2s;
+        }
+    }
+    
+    @include part(close) {
+        @include absolute((top: 0, left: 0));
+        @include size(100%, 100%);
+        pointer-events: none;
+    }
+    
+    @include part(options) {
+        @include absolute((top: 100%, left: 0));
+        width: 100%;
+        background: rgba($textColor, 0);
+        pointer-events: none;
+        z-index: 9;
+        transition: background .2s;
+        
+        &:after {
+            content: '';
+            position: absolute;
+            top: -25%;
+            left: 0;
+            width: 100%;
+            height: 125%;
+            box-shadow: 0 2px 5px 0 rgba(#000, 0), 0 2px 10px 0 rgba(#000, 0);
+            pointer-events: none;
+            transition: box-shadow .2s;
+        }
+    }
+    
+    @include part(option) {
+        color: rgba($darkTextColor, 0);
+        transition: color .2s;
+        
+        &:before {
+            content: attr(data-value);
+            @include absolute((bottom: 100%, left: 0));
+            padding: 1em;
+            color: $darkTextColor;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+    
+    input[type="radio"] {
+        display: none;
+    }
+}

@@ -11,11 +11,11 @@
     @include('atlas.installer::resources.favicons')
     @include('atlas.installer::resources.styles')
 </head>
-<body class="@home --env-{{ env('APP_ENV') }}">
-    <div id="container" class="+vertical-spread">
+<body class="{{ '@' . str_replace(['atlas.installer::', '.'], ['', '__'], Route::currentRouteName()) }} --env-{{ env('APP_ENV') }}">
+    <div id="container">
         @yield('header')
         
-        <main>
+        <main class="container">
             @yield('content')
         </main>
         

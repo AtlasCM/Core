@@ -1,0 +1,35 @@
+@include component(btn) {
+    position: relative;
+    padding: 4px;
+    color: $accentColor;
+    background: none;
+    border: none;
+    @include font-size(32px);
+    font-weight: 300;
+    
+    &:after {
+        content: '';
+        display: block;
+        @include absolute((bottom: 0, left: 50%));
+        @include size(0, 2px);
+        background: $accentColor;
+        transition: width .7s, left .7s;
+    }
+    
+    @include component(icn) {
+        position: relative;
+        left: 0;
+        transition: left .7s;
+    }
+    
+    &:hover {
+        &:after {
+            width: 100%;
+            left: 0;
+        }
+        
+        @include component(icn) {
+            left: 4px;
+        }
+    }
+}

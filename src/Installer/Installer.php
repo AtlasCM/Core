@@ -51,7 +51,6 @@ class Installer implements InstallerContract
     public function setEnv($variables)
     {
         $disk = $this->getDisk();
-        $variables = ['ATLAS_INSTALLED' => true];
         
         if (! $disk->exists('.env')) {
             $disk->copy('atlas.env', '.env');
@@ -70,8 +69,8 @@ class Installer implements InstallerContract
             return ['key' => $line, 'value' => null, 'line' => $line];
         })->keyBy('key');
         
-        $variables = collect($variables)->map(function ($value, $key) {
-            $line = $key == 'ATLAS_INSTALLED' ? -INF : INF;
+        $variables = collect($variables)->map(function ($value, $key) use ($env) {
+            $line = $key == 'ATLAS_INSTALLED' ? -INF : ($env->has($key) ? $env->get($key)['line'] : INF);
             
             return compact('key', 'value', 'line');
         });

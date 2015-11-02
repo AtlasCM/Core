@@ -33,6 +33,12 @@
     
     @include part(center) {
         text-align: center;
+        
+        @include component(text) {
+            @include part(lead) {
+                text-align: center;
+            }
+        }
     }
     
     @include part(right) {
