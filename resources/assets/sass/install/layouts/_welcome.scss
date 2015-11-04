@@ -1,5 +1,9 @@
 @include location(home) {
     #container {
         @extend .\+vertical-spread;
+        
+        #logo {
+            display: none;
+        }
     }
 }

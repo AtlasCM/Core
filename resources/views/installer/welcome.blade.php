@@ -10,6 +10,6 @@
 
 @section('content')
     <section class="text/center">
-        <a class="btn h3 +click-area --before" href="{{ route('atlas.installer::' . $route) }}">Get Started <i class="icn --angle-right"></i></a>
+        <a class="btn h3 +click-area --before" href="{{ route('atlas.installer::mode.create') }}">Get Started <i class="icn --angle-right"></i></a>
     </section>
 @stop

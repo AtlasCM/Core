@@ -13,6 +13,8 @@
 </head>
 <body class="{{ '@' . str_replace(['atlas.installer::', '.'], ['', '__'], Route::currentRouteName()) }} --env-{{ env('APP_ENV') }}">
     <div id="container">
+        <a id="logo" href="{{ Atlas::homepage() }}" target="_blank"></a>
+        
         @yield('header')
         
         <main class="container">

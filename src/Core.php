@@ -4,23 +4,13 @@ use DB;
 use Schema;
 use Constants;
 use Exception;
-use CupOfTea\Package\Package;
 use Illuminate\Foundation\AliasLoader;
 use Atlas\Support\LoadsServiceProviders;
 use Atlas\Exceptions\ServiceProviderConflictException;
 
 class Core implements CoreContract
 {
-    use Package, LoadsServiceProviders;
-    
-    /**
-     * Package Info.
-     *
-     * @const string PACKAGE
-     * @const string VERSION
-     */
-    const PACKAGE = 'Atlas/Core';
-    const VERSION = '0.0.0';
+    use LoadsServiceProviders;
     
     protected $facades = [];
     
@@ -55,7 +45,7 @@ class Core implements CoreContract
             $table_exists = false;
         }
         
-        return env('ATLAS_INSTALLED', false) && ($table_exists ? ((bool) DB::table($meta_table)->where($meta_key, 'is_installed')->where($meta_value, true)->count()) : false);
+        return env('ATLAS_INSTALLED', false) && ($table_exists ? ((bool) DB::table($meta_table)->where($meta_key, '__is_installed')->where($meta_value, true)->count()) : false);
     }
     
     /**

@@ -1,10 +1,10 @@
-@extends('atlas.installer::layouts.page')
+@extends('atlas.installer::layouts.modes')
 
 @section('heading')
-    <h1 class="text/title">First things first.</h1>
+    <h1 class="text/title">Environment Configuration</h1>
 @stop
 
-@section('content')
+@section('dev')
     <section class="text/center">
         <form class="form" method="post" action="{{ route(Route::currentRouteName()) }}">
             {!! csrf_field() !!}
@@ -37,6 +37,27 @@
             <div class="form/group">
                 <button type="submit" class="btn +click-area --before">Continue <i class="icn --angle-right"></i></button>
             </div>
+        </form>
+    </section>
+@stop
+
+@section('simple')
+    <section>
+        <p class="text/lead text/center">Are you a running this site as a testing site or as a live site?</p>
+    </section>
+    <section class="+horizontal-spread">
+        <form method="post" action="{{ route(Route::currentRouteName()) }}">
+            {!! csrf_field() !!}
+            <input type="hidden" name="env" value="staging">
+            
+            <button type="submit" class="btn +click-area --before">I'm just testing</button>
+        </form>
+        
+        <form method="post" action="{{ route(Route::currentRouteName()) }}">
+            {!! csrf_field() !!}
+            <input type="hidden" name="env" value="production">
+            
+            <button type="submit" class="btn +click-area --before">This is a live site</button>
         </form>
     </section>
 @stop

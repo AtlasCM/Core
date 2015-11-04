@@ -16,7 +16,8 @@
             "Atlas\\": "src/",
             "App\\": "../Atlas/app/",
             "spec\\Atlas\\": "spec"
-        }
+        },
+        "files": ["database/seeds/DatabaseSeeder.php"]
     },
     "extra": {
         "branch-alias": {

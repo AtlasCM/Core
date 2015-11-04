@@ -1,9 +1,9 @@
-<?php namespace Atlas\Constants\Facades;
+<?php namespace Atlas\Facades;
 
-use Atlas\Constants\Accessor;
+use Atlas\Atlas as AtlasProvider;
 use Illuminate\Support\Facades\Facade;
 
-class Constants extends Facade
+class Atlas extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -12,6 +12,6 @@ class Constants extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return Accessor::class;
+        return AtlasProvider::class;
     }
 }

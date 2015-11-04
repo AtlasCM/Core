@@ -1,9 +1,10 @@
 <?php namespace Atlas;
 
-use Illuminate\Support\ServiceProvider;
+use Atlas\Support\ServiceProvider;
 use Atlas\Support\LoadsServiceProviders;
 use Atlas\Constants\ConstantsServiceProvider as Constants;
 use Atlas\Installer\InstallerServiceProvider as Installer;
+use Atlas\Views\Compilers\AtlasBladeDirectivesServiceProvider as BladeDirectives;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     protected $providers = [
         Constants::class,
+        BladeDirectives::class,
     ];
     
     /**
@@ -55,6 +57,10 @@ class CoreServiceProvider extends ServiceProvider
         );
         
         $this->app->singleton(CoreContract::class, Core::class);
+        
+        $this->registerFacades([
+            'Atlas' => 'Atlas\Facades\Atlas',
+        ]);
     }
     
     /**

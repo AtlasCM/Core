@@ -6,6 +6,9 @@ use Storage;
 use Constants;
 use Exception;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+
 use Atlas\Installer\Contracts\Installer as InstallerContract;
 
 class Installer implements InstallerContract
@@ -69,7 +72,8 @@ class Installer implements InstallerContract
             return ['key' => $line, 'value' => null, 'line' => $line];
         })->keyBy('key');
         
-        $variables = collect($variables)->map(function ($value, $key) use ($env) {
+        $variables = $variables instanceof Collection ? $variables : collect($variables);
+        $variables = $variables->map(function ($value, $key) use ($env) {
             $line = $key == 'ATLAS_INSTALLED' ? -INF : ($env->has($key) ? $env->get($key)['line'] : INF);
             
             return compact('key', 'value', 'line');
@@ -83,11 +87,35 @@ class Installer implements InstallerContract
             
             return $env_str . (is_string($key) ? $key . '=' . (is_string($value) ? $value : var_export($value, true)) : '') . PHP_EOL;
         });
-        $env = trim(preg_replace('/\n\n\n*/', PHP_EOL . PHP_EOL, $env));
+        $env = trim(preg_replace('/\n\n\n*/', PHP_EOL . PHP_EOL, $env)) . PHP_EOL;
         
         if ($env !== $dotenv) {
             $disk->put('.env', $env);
         }
+    }
+    
+    public function testDbConnection(Request $request)
+    {
+        $connection = $request->input('DB_CONNECTION');
+        
+        config([
+            'database.default' => $connection,
+        ]);
+        
+        if ($connection == 'sqlite') {
+            config([
+                'database.connections.' . $connection . '.database' => $request->input('DB_FILE'),
+            ]);
+        } else {
+            config([
+                'database.connections.' . $connection . '.database' => $request->input('DB_DATABASE'),
+                'database.connections.' . $connection . '.host' => $request->input('DB_HOST'),
+                'database.connections.' . $connection . '.username' => $request->input('DB_USERNAME'),
+                'database.connections.' . $connection . '.password' => $request->input('DB_PASSWORD'),
+            ]);
+        }
+        
+        return $this->dbIsConfigured();
     }
     
     public function dbIsConfigured()
@@ -112,7 +140,7 @@ class Installer implements InstallerContract
             return false;
         }
         
-        return Schema::hasTable($this->meta_table) ? ((bool) DB::table($this->meta_table)->where($this->meta_name, 'is_installed')->where('meta_value', true)->count()) : false;
+        return Schema::hasTable($this->meta_table) ? ((bool) DB::table($this->meta_table)->where($this->meta_key, '__is_installed')->where($this->meta_value, true)->count()) : false;
     }
     
     /**
@@ -120,7 +148,7 @@ class Installer implements InstallerContract
      */
     public function getAppKey()
     {
-        DB::table('AtlasMeta')->where('meta_name', 'is_installed');
+        return DB::table('AtlasMeta')->where($this->meta_key, '__is_installed');
     }
     
     /**

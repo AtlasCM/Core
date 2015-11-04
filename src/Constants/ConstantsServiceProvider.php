@@ -19,7 +19,7 @@ class ConstantsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFacades([
-            'Constants' => 'Atlas\Constants\Facades\Constants',
+            'Constants' => 'Atlas\Facades\Constants',
         ]);
     }
 }

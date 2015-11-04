@@ -27,6 +27,39 @@ class InstallerController extends Controller
     }
     
     /**
+     * Installer: Determine wheter to use simple or dev mode for installation.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createMode()
+    {
+        return view('atlas.installer::mode');
+    }
+    
+    /**
+     * Installer: Determine wheter to use simple or dev mode for installation.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMode(Request $request, Installer $installer)
+    {
+        $this->validate($request, [
+            'mode' => 'required|in:dev,simple',
+        ]);
+        
+        $mode = $request->input('mode');
+        $request->session()->put('atlas.installer::mode', $mode);
+        
+        $env_configured = $installer->environmentIsConfigured();
+        $db_configured = $installer->dbIsConfigured();
+        $db_installed = $installer->dbIsInstalled();
+        
+        $route = $env_configured ? ($mode == 'simple' ? ($db_configured ? ($db_installed ? 'admin.create' : 'db.install') : 'db.create') : 'db.create') : 'env.create';
+        
+        return redirect()->route('atlas.installer::' . $route);
+    }
+    
+    /**
      * Installer: Set up Environment in .env.
      *
      * @return \Illuminate\Http\Response
@@ -56,7 +89,14 @@ class InstallerController extends Controller
             'APP_KEY' => Str::random(32),
         ]);
         
-        return redirect()->route('atlas.installer::db.create');
+        $mode = $request->session()->get('atlas.installer::mode');
+        
+        $db_configured = $installer->dbIsConfigured();
+        $db_installed = $installer->dbIsInstalled();
+        
+        $route = ($mode == 'simple' ? ($db_configured ? ($db_installed ? 'admin.create' : 'db.install') : 'db.create') : 'db.create');
+        
+        return redirect()->route('atlas.installer::' . $route);
     }
     
     /**
@@ -84,14 +124,44 @@ class InstallerController extends Controller
     public function storeDB(Request $request, Installer $installer)
     {
         $this->validate($request, [
-            'DB_CONNECTION' => 'required',
-            'DB_FILE' => 'required_if:DB_CONNECTION,sqlite',
+            'DB_CONNECTION' => 'required|in:sqlite,mysql,pgsql,sqlsrv',
+            'DB_PREFIX' => 'regex:/^[a-zA-Z_][a-zA-Z0-9_]*$/',
+            'DB_FILE' => 'required_if:DB_CONNECTION,sqlite|regex:/^[\\w\\/\\.-]+\\.sqlite$/|database:DB_CONNECTION,DB_FILE',
+            'DB_HOST' => 'required_unless:DB_CONNECTION,sqlite',
+            'DB_DATABASE' => 'required_unless:DB_CONNECTION,sqlite|database:DB_CONNECTION,DB_HOST,DB_DATABASE,DB_USERNAME,DB_PASSWORD',
+            'DB_USERNAME' => 'required_unless:DB_CONNECTION,sqlite',
+            'DB_PASSWORD' => 'required_unless:DB_CONNECTION,sqlite',
         ]);
         
-        DB_HOST=localhost
-DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
-DB_FILE=database.sqlite
+        if ($request->input('DB_CONNECTION') == 'sqlite') {
+            $installer->setEnv(collect($request->only(['DB_CONNECTION', 'DB_FILE', 'DB_PREFIX']))->filter(function ($item) {
+                return $item !== '';
+            }));
+        } else {
+            $installer->setEnv(collect($request->only(['DB_HOST', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD', 'DB_PREFIX']))->filter(function ($item) {
+                return $item !== '';
+            }));
+        }
+        
+        $mode = $request->input('mode');
+        $db_installed = $installer->dbIsInstalled();
+        
+        $route = ($mode == 'simple' ? ($db_installed ? 'admin.create' : 'db.install') : 'db.install');
+        
+        return redirect()->route('atlas.installer::' . $route);
+    }
+    
+    /**
+     * Installer:
+     * @return \Illuminate\Http\Response
+     */
+    public function installDb()
+    {
+        return 'install db';
+    }
+    
+    public function migrateDb()
+    {
+        return 'migrate db';
     }
 }

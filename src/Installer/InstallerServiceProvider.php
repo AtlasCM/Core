@@ -4,7 +4,9 @@ use Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
 use Atlas\Support\ServiceProvider;
+use Atlas\Installer\Http\Middleware\ModeSetMiddleware;
 use Atlas\Installer\Http\Middleware\EnvConfiguredMiddleware;
+use Atlas\Installer\Validation\Extensions\DatabaseValidator;
 use Atlas\Installer\Contracts\Installer as InstallerContract;
 
 class InstallerServiceProvider extends ServiceProvider
@@ -22,6 +24,7 @@ class InstallerServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeMiddleware = [
+        'atlas.installer.mode' => ModeSetMiddleware::class,
         'atlas.installer.env.configured' => EnvConfiguredMiddleware::class,
     ];
     
@@ -30,44 +33,16 @@ class InstallerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot(Router $router, InstallerContract $installer)
     {
-        Validator::extend('required_unless', function($attribute, $value, $parameters, $validator) {
-            $validator->requireParameterCount(2, $parameters, 'required_unless');
-            
-            $data = Arr::get($validator->getData(), $parameters[0]);
-            
-            $values = array_slice($parameters, 1);
-            
-            if (! in_array($data, $values)) {
-                if (is_null($value)) {
-                    return false;
-                } elseif (is_string($value) && trim($value) === '') {
-                    return false;
-                } elseif ((is_array($value) || $value instanceof Countable) && count($value) < 1) {
-                    return false;
-                } elseif ($value instanceof File) {
-                    return (string) $value->getPath() != '';
-                }
-                
-                return true;
-            }
-            
-            return true;
-        });
-        
-        Validator::replacer('foo', function($message, $attribute, $rule, $parameters) {
-            // TODO: This method is private so cant be used.
-            $other = $this->getAttribute(array_shift($parameters));
-            
-            return str_replace([':other', ':values'], [$other, implode(', ', $parameters)], $message);
-        });
-        
         foreach ($this->routeMiddleware as $key => $middleware) {
             $router->middleware($key, $middleware);
         }
         
-        include __DIR__ . '/routes.php';
+        include __DIR__ . '/Http/routes.php';
+        
+        Validator::extend('database', DatabaseValidator::class . '@validate');
+        Validator::replacer('database', DatabaseValidator::class . '@replace');
         
         $this->loadViewsFrom(__DIR__ . '/../../resources/views/installer', 'atlas.installer');
     }

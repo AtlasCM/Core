@@ -22,7 +22,7 @@
         transition: left .7s;
     }
     
-    &:hover {
+    &:hover, &:focus {
         &:after {
             width: 100%;
             left: 0;
