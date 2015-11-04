@@ -38,6 +38,6 @@ class AtlasBladeDirectivesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+        //
     }
 }

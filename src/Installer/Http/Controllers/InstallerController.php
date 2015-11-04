@@ -12,9 +12,8 @@ class InstallerController extends Controller
 {
     /**
      * Atlas Welcome page.
-     * 
+     *
      * @param  \Atlas\Installer\Contracts\Installer  $installer
-     * @route  atlas.installer::welcome
      * @return \Illuminate\Http\Response
      */
     public function welcome(Installer $installer)
@@ -30,8 +29,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Determine wheter to use simple or dev mode for installation.
-     * 
-     * @route  atlas.installer::mode.create
+     *
      * @return \Illuminate\Http\Response
      */
     public function createMode()
@@ -41,8 +39,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Determine wheter to use simple or dev mode for installation.
-     * 
-     * @route  atlas.installer::mode.store
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Atlas\Installer\Contracts\Installer  $installer
      * @return \Illuminate\Http\Response
@@ -67,8 +64,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Set up Environment in .env.
-     * 
-     * @route  atlas.installer::env.create
+     *
      * @return \Illuminate\Http\Response
      */
     public function createEnv()
@@ -78,8 +74,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Store Environment in .env.
-     * 
-     * @route  atlas.installer::env.store
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Atlas\Installer\Contracts\Installer  $installer
      * @return \Illuminate\Http\Response
@@ -111,8 +106,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Set up Database in .env.
-     * 
-     * @route  atlas.installer::db.create
+     *
      * @param  \Atlas\Installer\Contracts\Installer  $installer
      * @param  bool  $reconfigure  Whether or not to reconfigure the database when a valid connection was automatically detected.
      * @return \Illuminate\Http\Response
@@ -131,8 +125,7 @@ class InstallerController extends Controller
     
     /**
      * Installer: Store the Database Configuration in .env.
-     * 
-     * @route  atlas.installer::db.store
+     *
      * @param \Illuminate\Http\Request  $request
      * @param \Atlas\Installer\Contracts\Installer  $installer
      * @return \Illuminate\Http\Response
@@ -168,8 +161,8 @@ class InstallerController extends Controller
     }
     
     /**
-     * Installer: 
-     * 
+     * Installer: @todo: refactor.
+     *
      * @return \Illuminate\Http\Response
      */
     public function installDb()
