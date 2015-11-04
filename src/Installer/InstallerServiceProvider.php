@@ -1,7 +1,6 @@
 <?php namespace Atlas\Installer;
 
 use Validator;
-use Illuminate\Support\Arr;
 use Illuminate\Routing\Router;
 use Atlas\Support\ServiceProvider;
 use Atlas\Installer\Http\Middleware\ModeSetMiddleware;

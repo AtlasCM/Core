@@ -27,5 +27,4 @@ class EnvConfiguredMiddleware
         
         return $next($request);
     }
-
 }

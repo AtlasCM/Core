@@ -5,10 +5,8 @@ use Schema;
 use Storage;
 use Constants;
 use Exception;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-
 use Atlas\Installer\Contracts\Installer as InstallerContract;
 
 class Installer implements InstallerContract
@@ -122,7 +120,7 @@ class Installer implements InstallerContract
     {
         try {
             DB::connection()->getDatabaseName();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
         
@@ -136,7 +134,7 @@ class Installer implements InstallerContract
     {
         try {
             $table_exists = Schema::hasTable($this->meta_table);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
         
