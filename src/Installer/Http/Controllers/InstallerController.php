@@ -1,10 +1,7 @@
 <?php namespace Atlas\Installer\Http\Controllers;
 
-use Exception;
-
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
 use Atlas\Routing\Controller;
 use Atlas\Installer\Contracts\Installer;
 

@@ -19,7 +19,7 @@ class AtlasBladeDirectivesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('var', function($expression) {
+        Blade::directive('var', function ($expression) {
             $comma = '/^\\(([\'|"]?)(\\w+?)(?1),\\s*(.*)\\)/';
             $assign = '/^\\((\\$\\w+?)\\s*=\\s*(.*)\\)/';
             
